@@ -1,0 +1,49 @@
+//v1.0.4
+(function(URLs) {
+	for (var i = 0; i < URLs.length && URLs[i]; i++) {
+		if (!URLs[i].match(/adfox\.ru\/transparent\.gif$/)) {
+			(function(url, img) {
+				img.src = url;
+			})(URLs[i], new Image());
+		}
+	}
+})('http://banners.adfox.ru/transparent.gif'.split('|'));
+
+(function(){
+	var _pr1 = 1174382522,
+		_width = ('0px'.indexOf('%')!=-1?'0px':parseInt('0px')+'px'),
+		_cssText = '',
+		_image = 'http://banners.adfox.ru/170201/adfox/648604/1960220.gif',
+		_reference = 'http://ads.adfox.ru/253407/goLink?ylv=0.681&hash=c84c35e5ebbbc8d4&ad-session-id=753041521229634130&ybv=0.681&p2=fnmb&ytt=5&pr=jytggtd&p1=bwkfb&p5=ehntc&rand=bebevdg&rqs=8FLpHwYAAABcH6xaq2ZscqE4IcfczeQ_',
+		_target = '_blank',
+		_alt = 'spb',
+		_ph = null,
+		_html;
+
+	_html = '<a href="'+_reference+'" target="'+_target+'">'+
+		'	<img src="'+_image+'" alt="'+_alt+'" width="'+parseInt(_width)+'" style="width: 100%; height: auto; vertical-align: middle; border: 0px;">'+
+		'</a>';
+
+	if (_pr1) {
+		setTimeout(function(){document.close();},100);
+		_ph = parent.document.getElementById('AdFox_banner_'+_pr1);
+		_ph.innerHTML = _html;
+		if (setWidth()) {
+			_ph.style.width = _width;
+		}
+		_ph.style.cssText += _cssText;
+	} else {
+		document.write('<div style="width: '+_width+'; '+_cssText+'">'+_html+'</div>');
+	}
+
+	function setWidth() {
+		var banner = null;
+		if (typeof(parent.adfox) != 'undefined' && typeof(parent.adfox.getBanner) != 'undefined') {
+			banner = parent.adfox.getBanner(_pr1);
+			if (typeof(banner) !== 'undefined' && typeof(banner.length) == 'undefined' && banner.settings.indexOf('scale') != -1 && banner.ph.parentNode.clientWidth < parseInt(_width)) {
+				return false;
+			}
+		}
+		return true;
+	}
+})();
